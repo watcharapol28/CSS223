@@ -36,6 +36,7 @@ void walk(int table[][10],int x, int y, int count,int htg[])
 
 int main()
 {
+    ios_base::sync_with_stdio();cin.tie(0);
     cout << "=====================" << endl;
     int table[10][10] = {};
     struct data tree, hero, monster;
