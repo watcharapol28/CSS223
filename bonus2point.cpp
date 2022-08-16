@@ -123,7 +123,7 @@ int main()
     cout << "   all students grade \n";
     for(int i = 0; i < n; i++)
     {
-        printf("%-12s%-12s \tgrade \'%c\'  (score %d)\n", Student[i].name, Student[i].surname, Student[i].grade, Student[i].grade);
+        printf("%-12s%-14s grade \'%c\'  (score %d)\n", Student[i].name, Student[i].surname, Student[i].grade, Student[i].score);
         //cout << Student[i].name << "\t" << Student[i].surname << "\tgrade \"" << Student[i].grade << "\"  (score " << Student[i].score << ")"<< endl;
     }
     cout << endl;
@@ -167,7 +167,7 @@ Yoimiya
 
 //Output
 /*
- Data of all students
+   Data of all students
 Max score of students : 100
 Min score of students : 53
 Average score of students : 73
@@ -175,15 +175,15 @@ Mode score of students : 71
 Median score of students : 79
 S.D. score of students : 11
 
- all students grade
-Ayato   Kamisato        grade "C"  (score 79)
-Ayaka   Kamisato        grade "C"  (score 82)
-Itto    Arataki grade "F"  (score 53)
-Kazuha  Kaedehara       grade "D"  (score 64)
-Kokomi  Sangonomiya     grade "A"  (score 100)
-Lumeme  Ather   grade "C"  (score 80)
-Mona    -       grade "D"  (score 71)
-Raiden  Shogun  grade "D"  (score 69)
-Sara    Kujou   grade "D"  (score 71)
-Yoimiya -       grade "D"  (score 68)
+   all students grade
+Ayato       Kamisato       grade 'C'  (score 79)
+Ayaka       Kamisato       grade 'C'  (score 82)
+Itto        Arataki        grade 'F'  (score 53)
+Kazuha      Kaedehara      grade 'D'  (score 64)
+Kokomi      Sangonomiya    grade 'A'  (score 100)
+Lumeme      Ather          grade 'C'  (score 80)
+Mona        -              grade 'D'  (score 71)
+Raiden      Shogun         grade 'D'  (score 69)
+Sara        Kujou          grade 'D'  (score 71)
+Yoimiya     -              grade 'D'  (score 68)
 */
