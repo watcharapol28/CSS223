@@ -36,3 +36,28 @@ int main()
     cout << "Manhattan distance : " << abs(hero.x - monster.x) + abs(hero.y - monster.y) << endl; 
     cout << "Chebychev distance : " << max(abs(hero.x - monster.x), abs(hero.y - monster.y)) << endl;
 }
+
+
+// Output
+/*
+    Info
+Birth day : Friday (6)
+ID : 64090500421
+Tree : 6,9
+Hero : 6,1
+Monster : 4,2
+   *** table! ***
+0 0 0 0 0 2 0 0 0 0
+0 0 0 3 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 1 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+Euclidean distance : 2.24
+Manhattan distance : 3
+Chebychev distance : 2
+*/
