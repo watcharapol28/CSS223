@@ -129,6 +129,7 @@ int main()
     cout << endl;
 }
 
+//Input
 /*
 10
 Kokomi
@@ -164,9 +165,8 @@ Yoimiya
 */
 
 
+//Output
 /*
-Output
-
  Data of all students
 Max score of students : 100
 Min score of students : 53
@@ -186,5 +186,4 @@ Mona    -       grade "D"  (score 71)
 Raiden  Shogun  grade "D"  (score 69)
 Sara    Kujou   grade "D"  (score 71)
 Yoimiya -       grade "D"  (score 68)
-
 */
