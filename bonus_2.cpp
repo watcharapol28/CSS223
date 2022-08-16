@@ -99,7 +99,7 @@ int main()
 {
     cout << fixed << setprecision(2); // set float showed 2 decimal points
     int n;
-    cout << "How many your students? : ";
+    cout << "How many students? : ";
     cin >> n;
     for(int i = 0; i < n; i++)
     {
