@@ -38,7 +38,7 @@ int Minstudent(int n)//function for find min score of all student
     return minscore;
 }
 
-int AvrScore(int n)//function for find Average score of all student
+float AvrScore(int n)//function for find Average score of all student
 {
     float Avr;
     for(int i = 0; i < n; i++)
@@ -70,14 +70,14 @@ int MedianScore(int n)//function for find median score of all student
     return Student[pn].score;
 }
 
-int SDScore(int n)//function for find S.D. score of all student
+float SDScore(int n)//function for find S.D. score of all student
 {
-    float Avr = AvrScore(n), sum;
+    float Avr = AvrScore(n), sum = 0;
     for(int i = 0; i < n; i++)
     {
         sum += pow(Student[i].score - Avr, 2);
     }
-    float SD = sqrt(sum / n);
+    float SD = sqrt(sum / (n - 1));
     return SD;
 }
 
@@ -86,6 +86,7 @@ void find_grade(int n)
     float avr = AvrScore(n), sd = SDScore(n);
     for(int i = 0; i < n; i++)
     {
+        //cout<< Student[i].score<< " "<<avr<<" "<<sd<<endl;
         if(Student[i].score > avr + 2*sd) Student[i].grade = 'A';
         else if(Student[i].score > avr + sd) Student[i].grade = 'B';
         else if(Student[i].score > avr) Student[i].grade = 'C';
@@ -96,6 +97,7 @@ void find_grade(int n)
 
 int main()
 {
+    cout << fixed << setprecision(2); // set float showed 2 decimal points
     int n;
     cout << "How many your students? : ";
     cin >> n;
@@ -120,7 +122,7 @@ int main()
     find_grade(n);
     sort(Student, Student + n, Sortname);//sort first alphabet in name
 
-    cout << "   all students grade \n";
+    cout << "   All students grade \n";
     for(int i = 0; i < n; i++)
     {
         printf("%-12s%-14s grade \'%c\'  (score %d)\n", Student[i].name, Student[i].surname, Student[i].grade, Student[i].score);
@@ -134,56 +136,56 @@ int main()
 10
 Kokomi
 Sangonomiya
-100
+89
 Ayaka
 Kamisato
-82
+80
 Ayato
 Kamisato
-79
+76
 Lumeme
 Ather
-80
+76
 Itto
 Arataki
-53
+70
 Raiden
 Shogun
-69
+75
 Kazuha
 Kaedehara
-64
+73
 Sara
 Kujou
-71
+76
 Mona
 -
-71
+84
 Yoimiya
 -
-68
+74
 */
 
 
 //Output
 /*
    Data of all students
-Max score of students : 100
-Min score of students : 53
-Average score of students : 73
-Mode score of students : 71
-Median score of students : 79
-S.D. score of students : 11
+Max score of students : 89
+Min score of students : 70
+Average score of students : 77.30
+Mode score of students : 76
+Median score of students : 76
+S.D. score of students : 5.60
 
-   all students grade
-Ayato       Kamisato       grade 'C'  (score 79)
-Ayaka       Kamisato       grade 'C'  (score 82)
-Itto        Arataki        grade 'F'  (score 53)
-Kazuha      Kaedehara      grade 'D'  (score 64)
-Kokomi      Sangonomiya    grade 'A'  (score 100)
-Lumeme      Ather          grade 'C'  (score 80)
-Mona        -              grade 'D'  (score 71)
-Raiden      Shogun         grade 'D'  (score 69)
-Sara        Kujou          grade 'D'  (score 71)
-Yoimiya     -              grade 'D'  (score 68)
+   All students grade
+Ayato       Kamisato       grade 'D'  (score 76)
+Ayaka       Kamisato       grade 'C'  (score 80)
+Itto        Arataki        grade 'F'  (score 70)
+Kazuha      Kaedehara      grade 'D'  (score 73)
+Kokomi      Sangonomiya    grade 'A'  (score 89)
+Lumeme      Ather          grade 'D'  (score 76)
+Mona        -              grade 'B'  (score 84)
+Raiden      Shogun         grade 'D'  (score 75)
+Sara        Kujou          grade 'D'  (score 76)
+Yoimiya     -              grade 'D'  (score 74)
 */
