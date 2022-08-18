@@ -11,8 +11,9 @@ int main()
     ios_base::sync_with_stdio();cin.tie(0);
     cout << fixed << setprecision(2);
     int Mybirth = 6, last_id = 1, last2_id = 2, table[12][12] = {};     //Birthday : Friday ,  ID : 64090500421
-
     struct info tree, hero, monster;
+    
+    srand (time(NULL));
     tree.x = rand() % 9 + 1; tree.y = rand() % 9 + 1; tree.num = 1;
     hero.x = Mybirth; hero.y = last_id; hero.num = 2;
     monster.x = 10 - Mybirth; monster.y = last2_id; monster.num = 3;
