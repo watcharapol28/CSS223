@@ -9,9 +9,9 @@ struct data{
 int ans = INT_MAX;
 int Ans[10];
 
-void walk(int table[][10],int x, int y, int count,int htg[])
+void walk(int tabel[][10],int x, int y, int count,int htg[])
 {
-    if(table[x][y] == 3)
+    if(tabel[x][y] == 3)
     {
         //cout << "\"3\" : "<< x<<" "<<y <<" "<< count<<endl;
         if(ans > count){ans = count;
@@ -24,13 +24,13 @@ void walk(int table[][10],int x, int y, int count,int htg[])
         }
         
     }
-    if(table[x][y] == 0)
+    if(tabel[x][y] == 0)
     {
-        table[x][y] = 1;
-        if(x - 1 > -1){htg[count] = 1;walk(table, x-1, y, count+1,htg);}//left
-        if(y - 1 > -1){htg[count] = 2;walk(table, x, y-1, count+1,htg);}//down
-        if(x + 1 < 10){htg[count] = 3;walk(table, x+1, y, count+1,htg);}//right
-        if(y + 1 < 10){htg[count] = 4;walk(table, x, y+1, count+1,htg);}//up
+        tabel[x][y] = 1;
+        if(x - 1 > -1){htg[count] = 1;walk(tabel, x-1, y, count+1,htg);}//left
+        if(y - 1 > -1){htg[count] = 2;walk(tabel, x, y-1, count+1,htg);}//down
+        if(x + 1 < 10){htg[count] = 3;walk(tabel, x+1, y, count+1,htg);}//right
+        if(y + 1 < 10){htg[count] = 4;walk(tabel, x, y+1, count+1,htg);}//up
     }
 }
 
@@ -38,32 +38,32 @@ int main()
 {
     ios_base::sync_with_stdio();cin.tie(0);
     cout << "=====================" << endl;
-    int table[10][10] = {};
+    int tabel[10][10] = {};
     struct data tree, hero, monster;
     int htg[100];
     tree.x = rand() % 9; tree.y = rand() % 9; tree.value = 1;
     hero.x = 6; hero.y = 1; hero.value = 2;
     monster.x = 4; monster.y = 2; monster.value = 3;
-    table[tree.x][tree.y] = tree.value;
-    table[hero.x][hero.y] = 0;
-    table[monster.x][monster.y] = monster.value;
+    tabel[tree.x][tree.y] = tree.value;
+    tabel[hero.x][hero.y] = 0;
+    tabel[monster.x][monster.y] = monster.value;
 
-    walk(table, hero.x, hero.y, 0, htg);
+    walk(tabel, hero.x, hero.y, 0, htg);
     cout << "Tree point : " << tree.x << " " << tree.y << endl;
     cout << "Hero point : " << hero.x << " " << hero.y << endl;
     cout << "Monster point : " << monster.x << " " << monster.y << endl;
     cout << "Distance : "<< ans << " blocks" << endl;
-    cout << " \" This table \"" << endl;
-    memset(table, 0, sizeof(table));
-    table[tree.x][tree.y] = tree.value;
-    table[hero.x][hero.y] = hero.value;
-    table[monster.x][monster.y] = monster.value;
+    cout << " \" This tabel \"" << endl;
+    memset(tabel, 0, sizeof(tabel));
+    tabel[tree.x][tree.y] = tree.value;
+    tabel[hero.x][hero.y] = hero.value;
+    tabel[monster.x][monster.y] = monster.value;
 
     for(int i = 0; i < 10; i++)
     {
         for(int j = 0; j < 10; j++)
         {
-            cout << table[i][j] << " ";
+            cout << tabel[i][j] << " ";
         }
         cout << endl;
     }
