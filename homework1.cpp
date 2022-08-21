@@ -1,4 +1,5 @@
-//test KNN in my mind
+//test KNN test
+
 #include<bits/stdc++.h>
 using namespace std;
 
