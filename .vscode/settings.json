@@ -8,6 +8,8 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "string_view": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "typeindex": "cpp",
+        "typeinfo": "cpp"
     }
 }
