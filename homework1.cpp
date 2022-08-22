@@ -2,8 +2,8 @@
 using namespace std;
 
 struct info{
-    char name[10], type[5];
-    float data[9], distance;
+    char name[10], type[4];
+    float data[8], distance;
     bool operator < (const info &b) const
     {
         return distance < b.distance;
@@ -12,12 +12,12 @@ struct info{
 
 int main()
 {
-    struct info d[17], query;
+    struct info d[15], query;
     for(int i = 0; i < 15; i++)
     {
         cout << "Name : ";
         cin >> d[i].name;
-        cout << "Ne Ni TE Ti Se Si Fe Fi  type\n";
+        cout << "Ne Ni TE Ti Se Si Fe Fi  Type\n";
         for(int j = 0; j < 8; j++)
         {
             cin >> d[i].data[j];
@@ -26,7 +26,7 @@ int main()
     }
     cout << "Query Name : ";
     cin >> query.name;
-    cout << "Ne Ni TE Ti Se Si Fe Fi  type\n";
+    cout << "Ne Ni TE Ti Se Si Fe Fi  Type\n";
     for(int j = 0; j < 8; j++)
     {
         cin >> query.data[j];
@@ -44,7 +44,7 @@ int main()
     sort(d, d + 15);
 
     int k;
-    char Type_query[5];
+    char Type_query[4];
     cout << "Enter K Nearest Neighbors : ";
     cin >> k;
 
@@ -63,7 +63,11 @@ int main()
     cout << "Type : " << Type_query;
 }
 
+
 /*
+
+INPUT
+
 Kuuga 
 35.4 31 33 30 38 31 34 31 ENTP
 Agito 
@@ -96,4 +100,13 @@ Revice
 18.4 15 30 33 33 31 26 23 ESTJ
 Query
 32 32 27 36 29 31 28 23
+3
+
+
+
+OUTPUT
+
+Type : INTJ
+
 */
+
