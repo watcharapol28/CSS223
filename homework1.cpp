@@ -60,7 +60,7 @@ int main()
 
     struct info query;  //create query
     int k;
-    cout << "Query\nNe, Ni, Te, Ti, Se, Si, Fe, Fi\n";     
+    cout << "\nQuery\nNe, Ni, Te, Ti, Se, Si, Fe, Fi\n";     
 
     for(int i = 0; i < 8; i++)
     {
@@ -103,7 +103,7 @@ int main()
     }
 
     query.type = tyype;
-    cout << "\nYour Type : " << query.type;
+    cout << "\nYour type with KNN : " << query.type;
 
 }
 
