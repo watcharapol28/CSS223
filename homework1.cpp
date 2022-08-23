@@ -1,72 +1,4 @@
-/*
-// test O(n log n)
-#include<bits/stdc++.h>
-using namespace std;
-
-struct info{
-    char name[10], type[4];
-    float data[8], distance;
-    bool operator < (const info &b) const
-    {
-        return distance < b.distance;
-    }
-};
-
-int main()
-{
-    struct info d[15], query;
-    for(int i = 0; i < 15; i++)
-    {
-        cout << "Name : ";
-        cin >> d[i].name;
-        cout << "Ne Ni TE Ti Se Si Fe Fi  Type\n";
-        for(int j = 0; j < 8; j++)
-        {
-            cin >> d[i].data[j];
-        }
-        cin >> d[i].type;
-    }
-    cout << "\nQuery Name : ";
-    cin >> query.name;
-    cout << "Ne Ni TE Ti Se Si Fe Fi\n";
-    for(int j = 0; j < 8; j++)
-    {
-        cin >> query.data[j];
-    }
-    for(int i = 0; i < 15; i++)
-    {
-        int dis = 0;
-        for(int j = 0; j < 8; j++)
-        {
-            dis += pow(query.data[j] - d[i].data[j], 2);   // O(CN)
-        }
-        d[i].distance = sqrt(dis);
-    }
-
-    sort(d, d + 15);    // O(NlogN)
-
-    int k;
-    char Type_query[4];
-    cout << "\nEnter K Nearest Neighbors : ";
-    cin >> k;
-
-    for(int j = 0; j < 4; j++)
-    {
-        int check[150] = {}, now = INT_MIN;
-        for(int i = 0; i < k; i++)
-        {
-            if(++check[d[i].type[j]] > now)
-            {
-                now = check[d[i].type[j]];
-                Type_query[j] = d[i].type[j];
-            }
-        }
-    }
-    cout << "\nType : " << Type_query;
-}
-*/
-
-
+// O(n log n)
 #include<bits/stdc++.h>
 #include<fstream>
 using namespace std;
@@ -95,7 +27,7 @@ int main()
         while(getline(fs, temp, ','))
         {   
             if(temp.empty()){(column == 13)?column = 0:column++; continue;}
-            cout << column << " " << temp << " ";
+            cout << temp << " ";
             if(column == 0)
                 friends[i].id = temp;
             else if(column == 1)
@@ -164,8 +96,14 @@ int main()
             }
         }
     }
+    cout << k << " peoples nearest you : ";
+    for(int i = 0; i < k; i++)
+    {
+        cout << endl << friends[i].nick << "\t(" << friends[i].type << ")" ;
+    }
+
     query.type = tyype;
-    cout << "Your Type : " << query.type;
+    cout << "\nYour Type : " << query.type;
 
 }
 
@@ -174,3 +112,74 @@ int main()
 //  INPUT  3
 
 //  OUTPUT ESTJ
+
+
+
+
+/*
+// test O(n log n)
+#include<bits/stdc++.h>
+using namespace std;
+
+struct info{
+    char name[10], type[4];
+    float data[8], distance;
+    bool operator < (const info &b) const
+    {
+        return distance < b.distance;
+    }
+};
+
+int main()
+{
+    struct info d[15], query;
+    for(int i = 0; i < 15; i++)
+    {
+        cout << "Name : ";
+        cin >> d[i].name;
+        cout << "Ne Ni TE Ti Se Si Fe Fi  Type\n";
+        for(int j = 0; j < 8; j++)
+        {
+            cin >> d[i].data[j];
+        }
+        cin >> d[i].type;
+    }
+    cout << "\nQuery Name : ";
+    cin >> query.name;
+    cout << "Ne Ni TE Ti Se Si Fe Fi\n";
+    for(int j = 0; j < 8; j++)
+    {
+        cin >> query.data[j];
+    }
+    for(int i = 0; i < 15; i++)
+    {
+        int dis = 0;
+        for(int j = 0; j < 8; j++)
+        {
+            dis += pow(query.data[j] - d[i].data[j], 2);   // O(CN)
+        }
+        d[i].distance = sqrt(dis);
+    }
+
+    sort(d, d + 15);    // O(NlogN)
+
+    int k;
+    char Type_query[4];
+    cout << "\nEnter K Nearest Neighbors : ";
+    cin >> k;
+
+    for(int j = 0; j < 4; j++)
+    {
+        int check[150] = {}, now = INT_MIN;
+        for(int i = 0; i < k; i++)
+        {
+            if(++check[d[i].type[j]] > now)
+            {
+                now = check[d[i].type[j]];
+                Type_query[j] = d[i].type[j];
+            }
+        }
+    }
+    cout << "\nType : " << Type_query;
+}
+*/
