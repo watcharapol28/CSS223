@@ -86,7 +86,7 @@ int main()
     for(int j = 0; j < 4; j++)
     {
         int check[160] = {}, mx = INT_MIN;
-        for(int i = 0; i < k; i++)
+        for(int i = 1; i < k + 1; i++)
         {
             if(++check[friends[i].type[j]] > mx && friends[i].type[j] != '\0')
             {
@@ -97,7 +97,7 @@ int main()
         }
     }
     cout << k << " peoples nearest you : ";
-    for(int i = 0; i < k; i++)
+    for(int i = 1; i < k + 1; i++)
     {
         cout << endl << friends[i].nick << "\t(" << friends[i].type << ")" ;
     }
