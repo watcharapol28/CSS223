@@ -42,7 +42,7 @@ int Minstudent(int n)//function for find min score of all student
 
 float AvrScore(int n)//function for find Average score of all student
 {
-    float Avr;
+    float Avr = 0;
     for(int i = 0; i < n; i++)
     {
         Avr += Student[i].score;
@@ -53,7 +53,7 @@ float AvrScore(int n)//function for find Average score of all student
 
 int ModeScore(int n)//function for find mode score of all student
 {
-    int check[100] = {}, nMode = 0, ScoreMode;
+    int check[101] = {}, nMode = 0, ScoreMode;
     for(int i = 0; i < n; i++)
     {
         check[Student[i].score]++;
@@ -69,7 +69,10 @@ int ModeScore(int n)//function for find mode score of all student
 int MedianScore(int n)//function for find median score of all student
 {
     int pn = (n + 1) / 2 + 1;
-    return Student[pn].score;
+    if(n % 2 == 0)
+        return Student[pn].score;
+    else
+        return (Student[pn].score + Student[pn - 1].score) / 2;
 }
 
 float SDScore(int n)//function for find S.D. score of all student
