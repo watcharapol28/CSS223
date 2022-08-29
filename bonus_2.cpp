@@ -7,10 +7,10 @@ struct student //info of all student
 {
     char name[20], surname[20], grade;
     int score;
-    bool operator < (const student &b) const
-    {
-        return score < b.score; // sort data min to max
-    }
+    //bool operator < (const student &b) const
+    //{
+    //    return score < b.score; // sort data min to max
+    //}
 }Student[10];//have 10 students
 
 bool Sortname (const student &a, const student &b)
@@ -23,7 +23,8 @@ int Maxstudent(int n) //function for find max score of all student
     int maxscore = INT_MIN;
     for(int i = 0; i < n; i++)
     {
-        maxscore = max(maxscore, Student[i].score);
+        //maxscore = max(maxscore, Student[i].score);
+        maxscore = (maxscore < Student[i].score)?Student[i].score: maxscore;
     }
     return maxscore;
 }
@@ -33,7 +34,8 @@ int Minstudent(int n)//function for find min score of all student
     int minscore = INT_MAX;
     for(int i = 0; i < n; i++)
     {
-        minscore = min(minscore, Student[i].score);
+        //minscore = min(minscore, Student[i].score);
+        minscore = (minscore > Student[i].score)?Student[i].score: minscore;
     }
     return minscore;
 }
@@ -51,7 +53,7 @@ float AvrScore(int n)//function for find Average score of all student
 
 int ModeScore(int n)//function for find mode score of all student
 {
-    int check[MaxScore + 1] = {}, nMode = 0, ScoreMode;
+    int check[100] = {}, nMode = 0, ScoreMode;
     for(int i = 0; i < n; i++)
     {
         check[Student[i].score]++;
@@ -111,7 +113,27 @@ int main()
         cin >> Student[i].score;
         cout << endl;
     }
-    sort(Student, Student + n);
+    //sort(Student, Student + n);
+
+    for(int i = 0; i < n; i++) //sort
+    {
+        int score_swap = INT_MAX, point_swap;
+        char name_swap[20], surname_swap[20];
+        for(int j = i; j < n; j++)//find min
+        {
+            if(score_swap > Student[j].score)
+            {
+                score_swap = Student[j].score; 
+                point_swap = j;
+            }
+        }
+        //sort find min of value and search the rest
+        strcpy(name_swap, Student[i].name); strcpy(surname_swap, Student[i].surname);
+        strcpy(Student[i].name, Student[point_swap].name); strcpy(Student[i].surname, Student[point_swap].surname);
+        strcpy(Student[point_swap].name, name_swap); strcpy(Student[point_swap].surname, surname_swap);
+        Student[point_swap].score = Student[i].score; Student[i].score = score_swap;
+    }
+
     cout <<"   Data of all students \nMax score of students : "<< Maxstudent(n) << endl;
     cout <<"Min score of students : "<< Minstudent(n) << endl;
     cout <<"Average score of students : "<< AvrScore(n) << endl;
