@@ -78,7 +78,7 @@ class arrange
             }
             else
             {
-                cout << fence->name << " was removefrom the score board" << endl;
+                cout << fence->name << " removed out scoreboard" << endl;
             }
             fence = fence->next;
         }

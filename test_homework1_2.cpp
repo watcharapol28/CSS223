@@ -4,17 +4,18 @@
 using namespace std;
 
 
-struct info{
+struct info
+{
     string name, type, sex, nick, enneagram, id;
     float data[8], distance;
-}friends[1010];
+};
 
 
 class Node
 {
     public:
-        int point;
-        float distance;
+        string name, type, sex, nick, enneagram, id;
+        float data[8], distance;
         Node *next;
         Node *prev;
 };
@@ -32,113 +33,151 @@ class arrange
             head = NULL;
             tail = NULL;
         }
-    void arrange_node(int i)
-    {
-        Node* newnode = new Node;
-        newnode->point = i;
-        newnode->distance = friends[i].distance;
-        newnode->next = NULL;
-        newnode->prev = NULL;
 
-        if (head == NULL) 
+    void insert(Node* curr, struct info Info)
+    {
+        curr->distance = Info.distance;
+        for(int i = 0; i < 8; i++)
         {
+            curr->data[i] = Info.data[i];
+        }
+        curr->enneagram = Info.enneagram;
+        curr->id = Info.id;
+        curr->name = Info.name;
+        curr->nick = Info.nick;
+        curr->sex = Info.sex;
+        curr->type = Info.type;
+    }
+
+    void arrange_node(float distance, int k, info Info)
+    {
+        
+        if(head == NULL)
+        {
+            Node* newnode = new Node;
+            insert(newnode, Info);
+            newnode->next = NULL;
+            newnode->prev = NULL;
             head = newnode;
             tail = newnode;
-            fence = newnode;
+            fence = head;
         }
         else
         {
-            if (newnode->distance < head->distance)
+            if(distance < head->distance)
             {
+                Node* newnode = new Node;
+                insert(newnode, Info);
+                newnode->prev = NULL;
                 newnode->next = head;
                 head->prev = newnode;
                 head = newnode;
-                fence = head;
             }
             else
             {
                 fence = head;
-                while (fence->next != NULL)
+                for(int i = 0; i < k; i++)
                 {
-                    if (newnode->distance < fence->next->distance)
+                    if(fence->next == NULL)
                     {
-                        newnode->next = fence->next;
-                        fence->next->prev = newnode;
+                        Node* newnode = new Node;
+                        insert(newnode, Info);
+                        newnode->next = NULL;
                         fence->next = newnode;
-                        newnode->prev = fence;
+                        return;
+                    }
+                    else if(distance < fence->next->distance)
+                    {
+                        insert(fence->next, Info);
                         return;
                     }
                     fence = fence->next;
                 }
-                fence->next = newnode;
-                newnode->prev = fence;
-                tail = newnode;
             }
         }
     }
+
     void show(int k)
     {
-        char tyype[4];
-        for(int j = 0; j < 4; j++)
-        {
-            int check[160] = {}, mx = INT_MIN;
-            fence = (head->distance == 0)?head->next : head;
-            for(int i = 0; i < k; i++)
+        cout << k << " peoples nearest you : \n";
+        fence = (head->distance == 0) ? head->next : head;
+        for(int j = 0; j < k; j++)
             {
-                if(++check[friends[fence->point].type[j]] > mx && friends[fence->point].type[j] != '\0')
+                cout << fence->nick << " " << fence->type << " " << fence->distance <<endl;
+                fence = fence->next;
+            }
+
+        char ans[4];
+        for(int i = 0; i < 4; i++)
+        {
+            fence = (head->distance == 0) ? head->next : head;
+            int check[160] = {}, mx = INT_MIN;
+            for(int j = 0; j < k; j++)
+            {
+                if(++check[fence->type[i]] > mx)
                 {
-                //cout << check[friends[i].type[j]] << " " << friends[i].type[j] << endl ;
-                mx = check[friends[fence->point].type[j]];
-                tyype[j] = friends[fence->point].type[j];
+                    mx = check[fence->type[i]];
+                    ans[i] = fence->type[i];
                 }
                 fence = fence->next;
             }
         }
-        cout << k << " peoples nearest you : ";
-        fence = (head->distance == 0)?head->next : head;
-        for(int i = 0; i < k; i++)
-        {
-            cout << endl << friends[fence->point].nick << "\t(" << friends[fence->point].type << ")" ;
-            fence = fence->next;
-        }
-        cout << "\nYour type with KNN : " << tyype;
+        cout << "Query type is ", ans;
     }
+
 };
 
 
 int main()
 {
-    fstream fs;
-    string temp;
-    int numofstd = 0;
+    int k;
+    info Info;
+    info me;
     arrange data;
 
+    cout << "Query\nNe, Ni, Te, Ti, Se, Si, Fe, Fi\n"; 
+    for(int i = 0; i < 8; i++)
+    {
+        cin >> me.data[i];    // input query data
+    }
+    cout << "Enter K of Nearest Neighbors : ";
+    cin >> k;
+
+
+    fstream fs;
+    string temp;
+    float sum = 0;
     fs.open("MBTI.csv"); //insert data of all students
     if (fs.is_open())
     {
         int column = 0, i = 0;
         while(getline(fs, temp, ','))
         {   
-            if(temp.empty()){(column == 13)?column = 0:column++; continue;}
+            if(temp.empty()){(column == 13)?column = 0:column++; sum = 0;continue;}
             cout << temp << " ";
             if(column == 0)
-                friends[i].id = temp;
+                Info.id = temp;
             else if(column == 1)
-                friends[i].name = temp;
+                Info.name = temp;
             else if(column == 2)
-                friends[i].sex = temp;
+                Info.sex = temp;
             else if(column > 2 && column < 11)
             {
-                friends[i].data[column - 3] = stoi(temp);
+                Info.data[column - 3] = stoi(temp);
+                sum = pow((Info.data[column - 3] - me.data[column - 3]), 2);
             }
             else if(column == 11) 
-                friends[i].type = temp;
+                Info.type = temp;
             else if(column == 12) 
-                friends[i].enneagram = temp;
+                Info.enneagram = temp;
             if(column == 13) 
             {
-                friends[i].nick = temp;
-                i++; numofstd++; column = 0;
+                Info.nick = temp;
+                i++; column = 0;
+                float dis = sqrt(sum);
+                cout << dis;
+                sum = 0;
+                data.arrange_node(dis, k, Info);
             }
             else
             {
@@ -149,30 +188,6 @@ int main()
         fs.close();
     }
     else{cout<<"Error with open file \n";return 0;}
-    
-
-    struct info query;  //create query
-    int k;
-    cout << "\nQuery\nNe, Ni, Te, Ti, Se, Si, Fe, Fi\n";     
-
-    for(int i = 0; i < 8; i++)
-    {
-        cin >> query.data[i];    // input query data
-    }
-
-    cout << "Enter K of Nearest Neighbors : ";
-    cin >> k;
-
-    for(int i = 0; i < numofstd; i++)    //find distance with query and friends
-    {
-        int dist = 0;
-        for(int j = 0; j < 8; j++)
-        {
-            dist += pow(query.data[j] - friends[i].data[j], 2);
-        }
-        friends[i].distance = sqrt(dist);
-        data.arrange_node(i);//push to linked list
-    }
     data.show(k);
 }
 
