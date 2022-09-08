@@ -1,4 +1,4 @@
-// O()
+// O(n)
 #include<bits/stdc++.h>
 #include<fstream>
 using namespace std;
@@ -27,6 +27,7 @@ class arrange
         Node *head;
         Node *tail;
         Node *fence;
+        bool check = false;
     public:
         arrange()
         { 
@@ -34,9 +35,12 @@ class arrange
             tail = NULL;
         }
 
-    void insert(Node* curr, struct info Info)
+
+    void insert(Node* curr, info Info)
     {
         curr->distance = Info.distance;
+        curr->next = NULL;
+        curr->prev = NULL;
         for(int i = 0; i < 8; i++)
         {
             curr->data[i] = Info.data[i];
@@ -49,29 +53,27 @@ class arrange
         curr->type = Info.type;
     }
 
-    void arrange_node(float distance, int k, info Info)
+
+    void arrange_node(int k, info Info)
     {
-        
+        Node* newnode = new Node;
+
         if(head == NULL)
         {
-            Node* newnode = new Node;
             insert(newnode, Info);
-            newnode->next = NULL;
-            newnode->prev = NULL;
             head = newnode;
             tail = newnode;
             fence = head;
         }
         else
         {
-            if(distance < head->distance)
+            if(Info.distance < head->distance)
             {
-                Node* newnode = new Node;
                 insert(newnode, Info);
-                newnode->prev = NULL;
                 newnode->next = head;
                 head->prev = newnode;
                 head = newnode;
+                if(check){tail = tail->prev;}
             }
             else
             {
@@ -80,30 +82,42 @@ class arrange
                 {
                     if(fence->next == NULL)
                     {
-                        Node* newnode = new Node;
                         insert(newnode, Info);
-                        newnode->next = NULL;
                         fence->next = newnode;
+                        newnode->prev = fence->next;
+                        tail = newnode;
                         return;
                     }
-                    else if(distance < fence->next->distance)
+                    else if(Info.distance < fence->next->distance)
                     {
-                        insert(fence->next, Info);
-                        return;
+                        check = true;
+                        insert(newnode, Info);
+                        newnode->next = fence->next;
+                        newnode->prev = fence;
+                        fence->next->prev = newnode;
+                        fence->next = newnode;
+                        fence = tail;
+                        tail = fence->prev;
+                        //tail->next->prev = NULL;
+                        //tail->next = NULL;
+                        return ;
                     }
                     fence = fence->next;
                 }
+                tail = fence;
             }
         }
     }
+
 
     void show(int k)
     {
         cout << k << " peoples nearest you : \n";
         fence = (head->distance == 0) ? head->next : head;
+        //cout << " XXX  " << fence->type[1] <<endl;
         for(int j = 0; j < k; j++)
             {
-                cout << fence->nick << " " << fence->type << " " << fence->distance <<endl;
+                cout << j + 1 << ". (" << fence->type << ")  " << fence->nick << " " <<endl;
                 fence = fence->next;
             }
 
@@ -111,41 +125,34 @@ class arrange
         for(int i = 0; i < 4; i++)
         {
             fence = (head->distance == 0) ? head->next : head;
-            int check[160] = {}, mx = INT_MIN;
+            int check[200] = {}, mx = INT_MIN;
             for(int j = 0; j < k; j++)
             {
                 if(++check[fence->type[i]] > mx)
                 {
                     mx = check[fence->type[i]];
                     ans[i] = fence->type[i];
+                    
                 }
                 fence = fence->next;
             }
         }
-        cout << "Query type is ", ans;
+        cout << "Query type is " << ans;
     }
-
 };
 
 
 int main()
 {
-    int k;
-    info Info;
-    info me;
+    int k, numofstd = 0;
+    info Info, me;
+    queue <info> q;
+    
     arrange data;
-
-    cout << "Query\nNe, Ni, Te, Ti, Se, Si, Fe, Fi\n"; 
-    for(int i = 0; i < 8; i++)
-    {
-        cin >> me.data[i];    // input query data
-    }
-    cout << "Enter K of Nearest Neighbors : ";
-    cin >> k;
-
-
+    
     fstream fs;
     string temp;
+    
     float sum = 0;
     fs.open("MBTI.csv"); //insert data of all students
     if (fs.is_open())
@@ -164,7 +171,7 @@ int main()
             else if(column > 2 && column < 11)
             {
                 Info.data[column - 3] = stoi(temp);
-                sum = pow((Info.data[column - 3] - me.data[column - 3]), 2);
+                //sum = pow((Info.data[column - 3] - me.data[column - 3]), 2);
             }
             else if(column == 11) 
                 Info.type = temp;
@@ -173,11 +180,11 @@ int main()
             if(column == 13) 
             {
                 Info.nick = temp;
-                i++; column = 0;
-                float dis = sqrt(sum);
-                cout << dis;
-                sum = 0;
-                data.arrange_node(dis, k, Info);
+                i++; column = 0; numofstd++;
+                //float dis = sqrt(sum);
+                //sum = 0;
+                //data.arrange_node(dis, k, Info);
+                q.push(Info);
             }
             else
             {
@@ -188,6 +195,31 @@ int main()
         fs.close();
     }
     else{cout<<"Error with open file \n";return 0;}
+
+
+    cout << "Query\nNe, Ni, Te, Ti, Se, Si, Fe, Fi\n"; 
+    for(int i = 0; i < 8; i++)
+    {
+        cin >> me.data[i];    // input query data
+    }
+    cout << "Enter K of Nearest Neighbors : ";
+    cin >> k;
+
+    for(int i = 0; i < numofstd; i++)
+    {
+        int dis = 0;
+        info Inf = q.front();
+        q.pop();
+        for (int j = 0; j < 8; j++)
+        {
+            dis += pow(me.data[j] - Inf.data[j], 2);
+        }
+        Inf.distance = sqrt(dis);
+        //cout << Info.nick << "\t(" << Inf.type << ") " << endl;
+        
+        data.arrange_node(k, Inf);
+    }
+
     data.show(k);
 }
 
