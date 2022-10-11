@@ -49,15 +49,15 @@ struct Queue {
     {
         clear_s2();
         to_queue(s1);
-        if (s2.empty()) {
-            cout << "Q is Empty";
-            exit(0);
+        if (s2.empty()) {cout << "Queue empty, Error:";}
+        else
+        {
+            int x = s2.top();
+            s2.pop();
+            clear_s1();
+            to_stack(s2);
+            return x;
         }
-        int x = s2.top();
-        s2.pop();
-        clear_s1();
-        to_stack(s2);
-        return x;
     }
 };
 
@@ -73,5 +73,7 @@ int main()
     cout << q.deQueue() << '\n';
     cout << q.deQueue() << '\n';
     cout << q.deQueue() << '\n';
+    cout << q.deQueue() << '\n';
+    q.enQueue(300);
     cout << q.deQueue() << '\n';
 }
